@@ -170,8 +170,8 @@ flowchart TD
 ### 2. Environment Setup
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/face-tracker.git
-cd "Face Tracker"
+git clone https://github.com/mohankrishna-07/Intelligent-Face-Tracker-with-Auto--Registration-and-Visitor-Counting.git
+cd Intelligent-Face-Tracker-with-Auto--Registration-and-Visitor-Counting
 
 # Create and activate virtual environment
 python -m venv venv

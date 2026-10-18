@@ -195,41 +195,44 @@ class FaceTrackerApp:
                     fps_actual = 0.9 * fps_actual + 0.1 * instant_fps if fps_actual > 0 else instant_fps
 
                 # 5. Visual Rendering & Display
-                if self.config.display.show_window or self.video_writer is not None:
-                    vis_frame = frame.copy()
-                    if self.config.display.draw_boxes:
-                        vis_frame = HUDOverlay.draw_tracks(vis_frame, active_tracks, statuses)
-                    
-                    vis_frame = HUDOverlay.draw_banner(
-                        vis_frame,
-                        unique_count=self.identity_mgr.unique_visitor_count,
-                        active_count=len(active_tracks),
-                        fps=fps_actual,
-                        frame_idx=frame_count,
-                        total_frames=self.video_source.total_frames
-                    )
+                vis_frame = frame.copy()
+                if self.config.display.draw_boxes:
+                    vis_frame = HUDOverlay.draw_tracks(vis_frame, active_tracks, statuses)
+                
+                vis_frame = HUDOverlay.draw_banner(
+                    vis_frame,
+                    unique_count=self.identity_mgr.unique_visitor_count,
+                    active_count=len(active_tracks),
+                    fps=fps_actual,
+                    frame_idx=frame_count,
+                    total_frames=self.video_source.total_frames
+                )
 
-                    # Write frame if recording
-                    if self.video_writer is not None:
-                        h_o, w_o = vis_frame.shape[:2]
-                        if w_o != 1920 or h_o != 1080:
-                            small = cv2.resize(vis_frame, (1920, 1080))
-                            self.video_writer.write(small)
-                        else:
-                            self.video_writer.write(vis_frame)
+                # Save a high-resolution demo snapshot for evaluation
+                if frame_count == 35 or frame_count == 60:
+                    cv2.imwrite(str(self.project_root / "data" / "demo_overlay.jpg"), vis_frame)
 
-                    # Show OpenCV window
-                    if self.config.display.show_window:
-                        # Downscale for display screen fit
-                        h_d, w_d = vis_frame.shape[:2]
-                        disp_w = min(1280, w_d)
-                        disp_h = int(h_d * (disp_w / w_d))
-                        disp_img = cv2.resize(vis_frame, (disp_w, disp_h))
-                        cv2.imshow("Intelligent Face Tracker", disp_img)
-                        key = cv2.waitKey(1) & 0xFF
-                        if key == ord("q"):
-                            logger.info("User requested termination ('q').")
-                            break
+                # Write frame if recording
+                if self.video_writer is not None:
+                    h_o, w_o = vis_frame.shape[:2]
+                    if w_o != 1920 or h_o != 1080:
+                        small = cv2.resize(vis_frame, (1920, 1080))
+                        self.video_writer.write(small)
+                    else:
+                        self.video_writer.write(vis_frame)
+
+                # Show OpenCV window
+                if self.config.display.show_window:
+                    # Downscale for display screen fit
+                    h_d, w_d = vis_frame.shape[:2]
+                    disp_w = min(1280, w_d)
+                    disp_h = int(h_d * (disp_w / w_d))
+                    disp_img = cv2.resize(vis_frame, (disp_w, disp_h))
+                    cv2.imshow("Intelligent Face Tracker", disp_img)
+                    key = cv2.waitKey(1) & 0xFF
+                    if key == ord("q"):
+                        logger.info("User requested termination ('q').")
+                        break
 
         finally:
             self._teardown()
