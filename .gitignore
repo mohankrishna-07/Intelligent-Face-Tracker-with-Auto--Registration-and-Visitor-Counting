@@ -1,0 +1,29 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Environments
+venv/
+env/
+ENV/
+
+# Data and SQLite
+data/faces.db*
+*.db-wal
+*.db-shm
+
+# Models (downloaded weights)
+models/*.pt
+models/*.onnx
+
+# Cache & Testing
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Logs (images and files)
+logs/entries/
+logs/exits/
+logs/events.log

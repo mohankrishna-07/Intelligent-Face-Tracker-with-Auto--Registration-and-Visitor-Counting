@@ -1,0 +1,39 @@
+{
+  "input": {
+    "source": "video",
+    "video_path": "data/sample.mp4",
+    "rtsp_url": "",
+    "reconnect_delay_sec": 2.0,
+    "max_reconnect_attempts": 10,
+    "queue_size": 3
+  },
+  "detection": {
+    "model_path": "models/yolov8n-face.pt",
+    "frame_skip": 3,
+    "conf_threshold": 0.5,
+    "min_face_size": 40,
+    "blur_threshold": 25.0,
+    "device": "auto"
+  },
+  "recognition": {
+    "model_name": "buffalo_l",
+    "recognition_threshold": 0.45,
+    "max_embeddings_per_face": 5,
+    "reverify_every_n_frames": 30,
+    "device": "auto"
+  },
+  "tracking": {
+    "tracker": "bytetrack",
+    "min_confirm_frames": 3,
+    "exit_timeout_frames": 30
+  },
+  "storage": {
+    "db_path": "data/faces.db",
+    "log_dir": "logs",
+    "log_file": "logs/events.log"
+  },
+  "display": {
+    "show_window": true,
+    "draw_boxes": true
+  }
+}
