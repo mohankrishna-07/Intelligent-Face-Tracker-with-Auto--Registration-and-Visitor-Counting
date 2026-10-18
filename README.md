@@ -14,6 +14,8 @@ A modular, production-quality computer vision system that ingests video streams 
 > **Explanatory Demo Video Link:**
 > [Watch Solution Demonstration & Architecture Walkthrough (YouTube / Loom)](#) *(Placeholder: Insert your recorded Loom/YouTube URL here)*
 
+![Live Tracking HUD Demo](data/demo_overlay.jpg)
+
 ---
 
 ## 🏗️ System Architecture & Data Flow
